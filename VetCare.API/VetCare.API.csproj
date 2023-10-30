@@ -18,4 +18,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Shared\" />
+      <Folder Include="Shared\Domain\Services\Communication\" />
+      <Folder Include="Shared\Extensions\" />
+      <Folder Include="Shared\Persistence\" />
+    </ItemGroup>
+
 </Project>
