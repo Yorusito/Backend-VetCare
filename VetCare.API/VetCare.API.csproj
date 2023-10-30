@@ -22,6 +22,7 @@
       <Folder Include="Appointment\Domain\Models\" />
       <Folder Include="Appointment\Domain\Repositories\" />
       <Folder Include="Appointment\Domain\Services\Communication\" />
+      <Folder Include="Appointment\Mapping\" />
       <Folder Include="Shared\" />
       <Folder Include="Shared\Domain\Services\Communication\" />
       <Folder Include="Shared\Extensions\" />
