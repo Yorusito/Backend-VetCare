@@ -11,6 +11,10 @@ using VetCare.API.Store.Services;
 using VetCare.API.Shared.Persistence.Contexts;
 using VetCare.API.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using VetCare.API.Identification.Domain.Repositories;
+using VetCare.API.Identification.Domain.Services;
+using VetCare.API.Identification.Persistence.Repositories;
+using VetCare.API.Identification.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +50,9 @@ builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 // AutoMapper Configuration
 
@@ -53,7 +60,9 @@ builder.Services.AddAutoMapper(
     typeof(ModelToResourceProduct), 
     typeof(ResourceToModelProduct), 
     typeof(ModelToResourceProfile), 
-    typeof(ResourceToModelProfile));
+    typeof(ResourceToModelProfile),
+    typeof(VetCare.API.Identification.Mapping.ModelToResourceProfile),
+    typeof(VetCare.API.Identification.Mapping.ResourceToModelProfile));
     
 
 var app = builder.Build();
