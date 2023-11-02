@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using VetCare.API.Identification.Authorization.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using VetCare.API.Identification.Domain.Models;
 using VetCare.API.Identification.Domain.Services;

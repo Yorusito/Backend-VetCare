@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using VetCare.API.Appointment.Domain.Repositories;
+using VetCare.API.Identification.Authorization.Handlers.Interfaces;
 using VetCare.API.Identification.Domain.Models;
 using VetCare.API.Identification.Domain.Repositories;
 using VetCare.API.Identification.Domain.Services;
@@ -13,18 +14,38 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IJwtHandler _jwtHandler;
     private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtHandler jwtHandler)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _jwtHandler = jwtHandler;
     }
 
-    public Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+    public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest request)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.FindByEmailAsync(request.Email);
+        Console.WriteLine($"Request: {request.Email}, {request.Password}");
+        Console.WriteLine($"User: {user.Id}, {user.FirstName}, {user.LastName}, {user.Email}, {user.PasswordHash}");
+ 
+        // validate
+        if (user == null || !BCryptNet.Verify(request.Password, user.PasswordHash))
+        {
+            Console.WriteLine("Authentication Error");
+            throw new AppException("Email or password is incorrect");
+        }
+ 
+        Console.WriteLine("Authentication successful. About to generate token");
+        // authentication successful
+        var response = _mapper.Map<AuthenticateResponse>(user);
+        Console.WriteLine($"Response: {response.Id}, {response.FirstName}, {response.LastName}, {response.Email}");
+        response.Token = _jwtHandler.GenerateToken(user);
+        Console.WriteLine($"Generated token is {response.Token}");
+        return response;
+
     }
 
     public async Task<IEnumerable<User>> ListAsync()
