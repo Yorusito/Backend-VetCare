@@ -64,9 +64,10 @@ public class AppDbContext : DbContext
         builder.Entity<User>().ToTable("Users");
         builder.Entity<User>().HasKey(p => p.Id);
         builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(30);
+        builder.Entity<User>().Property(p => p.Email).IsRequired();
         builder.Entity<User>().Property(p => p.FirstName).IsRequired();
         builder.Entity<User>().Property(p => p.LastName).IsRequired();
+        builder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
 
         
         // Apply Snake Case Naming Convention
