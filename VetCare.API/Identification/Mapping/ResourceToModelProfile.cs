@@ -2,7 +2,7 @@
 using VetCare.API.Identification.Domain.Models;
 using VetCare.API.Identification.Domain.Services.Communication;
 
-namespace LearningCenter.API.Identification.Mapping;
+namespace VetCare.API.Identification.Mapping;
 
 public class ResourceToModelProfile : Profile
 {
