@@ -4,7 +4,7 @@ using VetCare.API.Identification.Domain.Repositories;
 using VetCare.API.Shared.Persistence.Contexts;
 using VetCare.API.Shared.Persistence.Repositories;
 
-namespace LearningCenter.API.Identification.Persistence.Repositories;
+namespace VetCare.API.Identification.Persistence.Repositories;
 
 public class UserRepository : BaseRepository, IUserRepository
 {
