@@ -11,12 +11,19 @@ using VetCare.API.Store.Services;
 using VetCare.API.Shared.Persistence.Contexts;
 using VetCare.API.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using VetCare.API.Identification.Authorization.Handlers.Implementations;
+using VetCare.API.Identification.Authorization.Handlers.Interfaces;
+using VetCare.API.Identification.Authorization.Middleware;
+using VetCare.API.Identification.Authorization.Settings;
 using VetCare.API.Identification.Domain.Repositories;
 using VetCare.API.Identification.Domain.Services;
 using VetCare.API.Identification.Persistence.Repositories;
 using VetCare.API.Identification.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add CORS
+builder.Services.AddCors();
 
 // Add services to the container.
 
@@ -39,6 +46,9 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+// AppSettings Configuration
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
 // Dependency Injection Configuration
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -50,6 +60,8 @@ builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+// Security Injection Configuration
+builder.Services.AddScoped<IJwtHandler, JwtHandler>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -81,6 +93,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Configure CORS 
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+// Configure Error Handler Middleware
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
+// Configure JWT Handling
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 
