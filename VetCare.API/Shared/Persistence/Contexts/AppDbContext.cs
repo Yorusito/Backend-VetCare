@@ -1,6 +1,7 @@
 using VetCare.API.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using VetCare.API.Appointment.Domain.Models;
+using VetCare.API.Identification.Domain.Models;
 using VetCare.API.Store.Domain.Models;
 
 namespace VetCare.API.Shared.Persistence.Contexts;
@@ -11,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<User> Users { get; set; }
     
     
 
@@ -33,8 +35,6 @@ public class AppDbContext : DbContext
         builder.Entity<Pet>().Property(p => p.photoUrl).IsRequired();
         builder.Entity<Pet>().Property(p => p.Color).IsRequired().HasMaxLength(30);
         builder.Entity<Pet>().Property(p => p.Date).IsRequired();
-        
-        
         
         // Relationships
         builder.Entity<Pet>()
@@ -61,6 +61,14 @@ public class AppDbContext : DbContext
         builder.Entity<Product>().Property(p => p.Stock).IsRequired();
         
         
+        builder.Entity<User>().ToTable("Users");
+        builder.Entity<User>().HasKey(p => p.Id);
+        builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<User>().Property(p => p.Email).IsRequired();
+        builder.Entity<User>().Property(p => p.FirstName).IsRequired();
+        builder.Entity<User>().Property(p => p.LastName).IsRequired();
+        builder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
+
         
         // Apply Snake Case Naming Convention
         
