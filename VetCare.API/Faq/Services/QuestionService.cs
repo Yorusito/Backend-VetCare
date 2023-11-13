@@ -5,6 +5,7 @@ using VetCare.API.Faq.Domain.Services.Communication;
 
 namespace VetCare.API.Faq.Services;
 
+
 public class QuestionService : IQuestionService
 {
     private readonly IQuestionRepository _questionRepository;
@@ -24,7 +25,7 @@ public class QuestionService : IQuestionService
     public async Task<QuestionResponse> SaveAsync(Question question)
     {
         var existingQuestionWithId = await _questionRepository.FindByIdAsync(question.Id);
-        if (existingQuestionWithIdWithId !=null)
+        if (existingQuestionWithId !=null)
             return new QuestionResponse("Question already exists");
 
         try
@@ -91,7 +92,7 @@ public class QuestionService : IQuestionService
         catch (Exception e)
         {
             // Error Handling
-            return new QuestionResponse($"An error occurred while deleting the question: {e.Message}")
+            return new QuestionResponse($"An error occurred while deleting the question: {e.Message}");
         }
     }
 }

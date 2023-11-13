@@ -3,7 +3,7 @@ using VetCare.API.Faq.Domain.Models;
 
 namespace VetCare.API.Faq.Domain.Services.Communication;
 
-public class QuestionResponse
+public class QuestionResponse : BaseResponse<Question>
 {
     public QuestionResponse(string message) : base(message)
     {

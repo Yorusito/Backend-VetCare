@@ -6,7 +6,7 @@ using VetCare.API.Faq.Domain.Repositories;
 
 namespace VetCare.API.Faq.Persistence.Repositories;
 
-public class QuestionRepository
+public class QuestionRepository : BaseRepository, IQuestionRepository
 {
     public QuestionRepository(AppDbContext context) : base(context)
     {
@@ -14,28 +14,28 @@ public class QuestionRepository
 
     public async Task<IEnumerable<Question>> ListAsync()
     {
-        return await _context.Question
+        return await _context.Questions
             .ToListAsync();
     }
 
     public async Task AddAsync(Question question)
     {
-        await _context.Question.AddAsync(question);
+        await _context.Questions.AddAsync(question);
     }
 
     public async Task<Question> FindByIdAsync(int questionId)
     {
-        return await _context.Question
+        return await _context.Questions
             .FirstOrDefaultAsync(p => p.Id == questionId);
     }
 
     public void Update(Question question)
     {
-        _context.Question.Update(question);
+        _context.Questions.Update(question);
     }
 
     public void Remove(Question question)
     {
-        _context.Question.Remove(question);
+        _context.Questions.Remove(question);
     }
 }
