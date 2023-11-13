@@ -1,6 +1,7 @@
 using VetCare.API.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using VetCare.API.Appointment.Domain.Models;
+using VetCare.API.Faq.Domain.Models;
 using VetCare.API.Identification.Domain.Models;
 using VetCare.API.Store.Domain.Models;
 
@@ -13,6 +14,8 @@ public class AppDbContext : DbContext
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<Question> Questions { get; set; }
     
     
 
@@ -69,6 +72,14 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(p => p.LastName).IsRequired();
         builder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
 
+        
+        builder.Entity<Question>().ToTable("Questions");
+        builder.Entity<Question>().HasKey(p => p.Id);
+        builder.Entity<Question>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Question>().Property(p => p.Name).IsRequired();
+        builder.Entity<Question>().Property(p => p.Description).IsRequired();
+        
+        
         
         // Apply Snake Case Naming Convention
         
