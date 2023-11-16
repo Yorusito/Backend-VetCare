@@ -31,57 +31,57 @@ public class PetService : IPetService
         }
         catch (Exception e)
         {
-            return new PetResponse($"An error occurred while saving the category: {e.Message}");
+            return new PetResponse($"An error occurred while saving the pet: {e.Message}");
         }
     }
 
     public async Task<PetResponse> UpdateAsync(int id, Pet pet)
     {
-        var existingCategory = await _petRepository.FindByIdAsync(id);
+        var existingPet = await _petRepository.FindByIdAsync(id);
 
-        if (existingCategory == null)
+        if (existingPet == null)
             return new PetResponse("Category not found.");
 
-        existingCategory.Name = pet.Name;
-        existingCategory.Breed = pet.Breed;
-        existingCategory.Weight = pet.Weight;
-        existingCategory.Type = pet.Type;
-        existingCategory.photoUrl = pet.photoUrl;
-        existingCategory.Color = pet.Color;
-        existingCategory.Date = pet.Date;
+        existingPet.Name = pet.Name;
+        existingPet.Breed = pet.Breed;
+        existingPet.Weight = pet.Weight;
+        existingPet.Type = pet.Type;
+        existingPet.photoUrl = pet.photoUrl;
+        existingPet.Color = pet.Color;
+        existingPet.Date = pet.Date;
         
 
         try
         {
-            _petRepository.Update(existingCategory);
+            _petRepository.Update(existingPet);
             await _unitOfWork.CompleteAsync();
 
-            return new PetResponse(existingCategory);
+            return new PetResponse(existingPet);
         }
         catch (Exception e)
         {
-            return new PetResponse($"An error occurred while updating the category: {e.Message}");
+            return new PetResponse($"An error occurred while updating the pet: {e.Message}");
         }
     }
 
     public async Task<PetResponse> DeleteAsync(int id)
     {
-        var existingCategory = await _petRepository.FindByIdAsync(id);
+        var existingPet = await _petRepository.FindByIdAsync(id);
 
-        if (existingCategory == null)
-            return new PetResponse("Category not found.");
+        if (existingPet == null)
+            return new PetResponse("Pet not found.");
 
         try
         {
-            _petRepository.Remove(existingCategory);
+            _petRepository.Remove(existingPet);
             await _unitOfWork.CompleteAsync();
 
-            return new PetResponse(existingCategory);
+            return new PetResponse(existingPet);
         }
         catch (Exception e)
         {
-            // Do some logging stuff
-            return new PetResponse($"An error occurred while deleting the category: {e.Message}");
+            
+            return new PetResponse($"An error occurred while deleting the pet: {e.Message}");
         }
     }
 }

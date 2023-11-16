@@ -23,30 +23,30 @@ public class PrescriptionService : IPrescriptionService
         return await _prescriptionRepository.ListAsync();
     }
 
-    public async Task<IEnumerable<Prescription>> ListByCategoryIdAsync(int categoryId)
+    public async Task<IEnumerable<Prescription>> ListByPetIdAsync(int petId)
     {
-        return await _prescriptionRepository.FindByCategoryIdAsync(categoryId);
+        return await _prescriptionRepository.FindByPetIdAsync(petId);
     }
 
     public async Task<PrescriptionResponse> SaveAsync(Prescription prescription)
     {
-        // Validate CategoryId
+        // Validate PetId
 
-        var existingCategory = await _petRepository.FindByIdAsync(prescription.CategoryId);
+        var existingPet = await _petRepository.FindByIdAsync(prescription.PetId);
 
-        if (existingCategory == null)
-            return new PrescriptionResponse("Invalid Category");
+        if (existingPet == null)
+            return new PrescriptionResponse("Invalid Pet");
         
         // Validate Title
 
-        var existingTutorialWithTitle = await _prescriptionRepository.FindByTitleAsync(prescription.Title);
+        var existingPrescriptionWithTitle = await _prescriptionRepository.FindByTitleAsync(prescription.Title);
 
-        if (existingTutorialWithTitle != null)
-            return new PrescriptionResponse("Tutorial title already exists.");
+        if (existingPrescriptionWithTitle != null)
+            return new PrescriptionResponse("Prescription title already exists.");
 
         try
         {
-            // Add Tutorial
+            // Add Prescription
             await _prescriptionRepository.AddAsync(prescription);
             
             // Complete Transaction
@@ -59,7 +59,7 @@ public class PrescriptionService : IPrescriptionService
         catch (Exception e)
         {
             // Error Handling
-            return new PrescriptionResponse($"An error occurred while saving the tutorial: {e.Message}");
+            return new PrescriptionResponse($"An error occurred while saving the prescription: {e.Message}");
         }
 
         
@@ -67,68 +67,68 @@ public class PrescriptionService : IPrescriptionService
 
     public async Task<PrescriptionResponse> UpdateAsync(int prescriptionId, Prescription prescription)
     {
-        var existingTutorial = await _prescriptionRepository.FindByIdAsync(prescriptionId);
+        var existingPrescription = await _prescriptionRepository.FindByIdAsync(prescriptionId);
         
-        // Validate Tutorial
+        // Validate Prescription
 
-        if (existingTutorial == null)
-            return new PrescriptionResponse("Tutorial not found.");
+        if (existingPrescription == null)
+            return new PrescriptionResponse("Prescription not found.");
 
-        // Validate CategoryId
+        // Validate PetId
 
-        var existingCategory = await _petRepository.FindByIdAsync(prescription.CategoryId);
+        var existingPet = await _petRepository.FindByIdAsync(prescription.PetId);
 
-        if (existingCategory == null)
-            return new PrescriptionResponse("Invalid Category");
+        if (existingPet == null)
+            return new PrescriptionResponse("Invalid Pet");
         
         // Validate Title
 
-        var existingTutorialWithTitle = await _prescriptionRepository.FindByTitleAsync(prescription.Title);
+        var existingPrescriptionWithTitle = await _prescriptionRepository.FindByTitleAsync(prescription.Title);
 
-        if (existingTutorialWithTitle != null && existingTutorialWithTitle.Id != existingTutorial.Id)
-            return new PrescriptionResponse("Tutorial title already exists.");
+        if (existingPrescriptionWithTitle != null && existingPrescriptionWithTitle.Id != existingPrescription.Id)
+            return new PrescriptionResponse("Prescription title already exists.");
         
         // Modify Fields
-        existingTutorial.Title = prescription.Title;
-        existingTutorial.Description = prescription.Description;
-        existingTutorial.Published = prescription.Published;
+        existingPrescription.Title = prescription.Title;
+        existingPrescription.Description = prescription.Description;
+        existingPrescription.Published = prescription.Published;
         try
         {
-            _prescriptionRepository.Update(existingTutorial);
+            _prescriptionRepository.Update(existingPrescription);
             await _unitOfWork.CompleteAsync();
 
-            return new PrescriptionResponse(existingTutorial);
+            return new PrescriptionResponse(existingPrescription);
             
         }
         catch (Exception e)
         {
             // Error Handling
-            return new PrescriptionResponse($"An error occurred while updating the tutorial: {e.Message}");
+            return new PrescriptionResponse($"An error occurred while updating the prescription: {e.Message}");
         }
 
     }
 
     public async Task<PrescriptionResponse> DeleteAsync(int prescriptionId)
     {
-        var existingTutorial = await _prescriptionRepository.FindByIdAsync(prescriptionId);
+        var existingPrescription = await _prescriptionRepository.FindByIdAsync(prescriptionId);
         
-        // Validate Tutorial
+        // Validate Prescription
 
-        if (existingTutorial == null)
-            return new PrescriptionResponse("Tutorial not found.");
+        if (existingPrescription == null)
+            return new PrescriptionResponse("Prescription not found.");
         
         try
         {
-            _prescriptionRepository.Remove(existingTutorial);
+            _prescriptionRepository.Remove(existingPrescription);
             await _unitOfWork.CompleteAsync();
 
-            return new PrescriptionResponse(existingTutorial);
+            return new PrescriptionResponse(existingPrescription);
             
         }
         catch (Exception e)
         {
             // Error Handling
-            return new PrescriptionResponse($"An error occurred while deleting the tutorial: {e.Message}");
+            return new PrescriptionResponse($"An error occurred while deleting the prescription: {e.Message}");
         }
 
     }

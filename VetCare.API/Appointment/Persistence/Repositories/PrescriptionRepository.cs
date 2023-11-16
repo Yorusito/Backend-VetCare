@@ -39,10 +39,10 @@ public class PrescriptionRepository : BaseRepository, IPrescriptionRepository
             .FirstOrDefaultAsync(p => p.Title == title);
     }
 
-    public async Task<IEnumerable<Prescription>> FindByCategoryIdAsync(int categoryId)
+    public async Task<IEnumerable<Prescription>> FindByPetIdAsync(int petId)
     {
         return await _context.Prescriptions
-            .Where(p => p.CategoryId == categoryId)
+            .Where(p => p.PetId == petId)
             .Include(p => p.Pet)
             .ToListAsync();
     }

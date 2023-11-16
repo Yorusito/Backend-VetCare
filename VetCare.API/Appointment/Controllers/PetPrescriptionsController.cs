@@ -20,9 +20,9 @@ public class PetPrescriptionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<PrescriptionResource>> GetAllByCategoryIdAsync(int petId)
+    public async Task<IEnumerable<PrescriptionResource>> GetAllByPetIdAsync(int petId)
     {
-        var prescriptions = await _prescriptionService.ListByCategoryIdAsync(petId);
+        var prescriptions = await _prescriptionService.ListByPetIdAsync(petId);
 
         var resources = _mapper.Map<IEnumerable<Prescription>, IEnumerable<PrescriptionResource>>(prescriptions);
 

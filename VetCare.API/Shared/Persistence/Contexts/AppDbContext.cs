@@ -43,7 +43,7 @@ public class AppDbContext : DbContext
         builder.Entity<Pet>()
             .HasMany(p => p.Prescriptions)
             .WithOne(p => p.Pet)
-            .HasForeignKey(p => p.CategoryId);
+            .HasForeignKey(p => p.PetId);
         
         builder.Entity<Prescription>().ToTable("Prescriptions");
         builder.Entity<Prescription>().HasKey(p => p.Id);

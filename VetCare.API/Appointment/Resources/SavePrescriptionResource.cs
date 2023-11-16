@@ -12,7 +12,7 @@ public class SavePrescriptionResource
     public string Description { get; set; }
     
     [Required]
-    public int CategoryId { get; set; }
+    public int PetId { get; set; }
     
     [Required]
     public bool Published { get; set; }

@@ -23,8 +23,8 @@ public class PrescriptionsController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<PrescriptionResource>> GetAllAsync()
     {
-        var tutorials = await _prescriptionService.ListAsync();
-        var resources = _mapper.Map<IEnumerable<Prescription>, IEnumerable<PrescriptionResource>>(tutorials);
+        var prescriptions = await _prescriptionService.ListAsync();
+        var resources = _mapper.Map<IEnumerable<Prescription>, IEnumerable<PrescriptionResource>>(prescriptions);
 
         return resources;
 
@@ -36,16 +36,16 @@ public class PrescriptionsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
 
-        var tutorial = _mapper.Map<SavePrescriptionResource, Prescription>(resource);
+        var prescription = _mapper.Map<SavePrescriptionResource, Prescription>(resource);
 
-        var result = await _prescriptionService.SaveAsync(tutorial);
+        var result = await _prescriptionService.SaveAsync(prescription);
 
         if (!result.Success)
             return BadRequest(result.Message);
 
-        var tutorialResource = _mapper.Map<Prescription, PrescriptionResource>(result.Resource);
+        var prescriptionResource = _mapper.Map<Prescription, PrescriptionResource>(result.Resource);
 
-        return Ok(tutorialResource);
+        return Ok(prescriptionResource);
     }
 
     [HttpPut("{id}")]
@@ -54,16 +54,16 @@ public class PrescriptionsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
 
-        var tutorial = _mapper.Map<SavePrescriptionResource, Prescription>(resource);
+        var prescription = _mapper.Map<SavePrescriptionResource, Prescription>(resource);
 
-        var result = await _prescriptionService.UpdateAsync(id, tutorial);
+        var result = await _prescriptionService.UpdateAsync(id, prescription);
 
         if (!result.Success)
             return BadRequest(result.Message);
 
-        var tutorialResource = _mapper.Map<Prescription, PrescriptionResource>(result.Resource);
+        var prescriptionResource = _mapper.Map<Prescription, PrescriptionResource>(result.Resource);
 
-        return Ok(tutorialResource);
+        return Ok(prescriptionResource);
     }
 
     [HttpDelete("{id}")]

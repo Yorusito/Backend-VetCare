@@ -24,8 +24,8 @@ public class PetsController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<PetResource>> GetAllAsync()
     {
-        var categories = await _petService.ListAsync();
-        var resources = _mapper.Map<IEnumerable<Pet>, IEnumerable<PetResource>>(categories);
+        var pets = await _petService.ListAsync();
+        var resources = _mapper.Map<IEnumerable<Pet>, IEnumerable<PetResource>>(pets);
 
         return resources;
     }
@@ -36,16 +36,16 @@ public class PetsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
 
-        var category = _mapper.Map<SavePetResource, Pet>(resource);
+        var pet = _mapper.Map<SavePetResource, Pet>(resource);
 
-        var result = await _petService.SaveAsync(category);
+        var result = await _petService.SaveAsync(pet);
 
         if (!result.Success)
             return BadRequest(result.Message);
 
-        var categoryResource = _mapper.Map<Pet, PetResource>(result.Resource);
+        var petResource = _mapper.Map<Pet, PetResource>(result.Resource);
 
-        return Ok(categoryResource);
+        return Ok(petResource);
     }
 
     [HttpPut("{id}")]
@@ -54,15 +54,15 @@ public class PetsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState.GetErrorMessages());
         
-        var category = _mapper.Map<SavePetResource, Pet>(resource);
-        var result = await _petService.UpdateAsync(id, category);
+        var pet = _mapper.Map<SavePetResource, Pet>(resource);
+        var result = await _petService.UpdateAsync(id, pet);
         
         if (!result.Success)
             return BadRequest(result.Message);
 
-        var categoryResource = _mapper.Map<Pet, PetResource>(result.Resource);
+        var petResource = _mapper.Map<Pet, PetResource>(result.Resource);
 
-        return Ok(categoryResource);
+        return Ok(petResource);
     }
 
     [HttpDelete("{id}")]
@@ -73,9 +73,9 @@ public class PetsController : ControllerBase
         if (!result.Success)
             return BadRequest(result.Message);
         
-        var categoryResource = _mapper.Map<Pet, PetResource>(result.Resource);
+        var petResource = _mapper.Map<Pet, PetResource>(result.Resource);
 
-        return Ok(categoryResource);
+        return Ok(petResource);
     }
     
 }

@@ -8,7 +8,7 @@ public interface IPrescriptionRepository
     Task AddAsync(Prescription prescription);
     Task<Prescription> FindByIdAsync(int prescriptionId);
     Task<Prescription> FindByTitleAsync(string title);
-    Task<IEnumerable<Prescription>> FindByCategoryIdAsync(int categoryId);
+    Task<IEnumerable<Prescription>> FindByPetIdAsync(int petId);
     void Update(Prescription prescription);
     void Remove(Prescription prescription);
 }
