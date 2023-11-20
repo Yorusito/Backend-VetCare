@@ -23,7 +23,7 @@
     <ItemGroup>
       <Folder Include="Center\Controllers\" />
       <Folder Include="Center\Domain\Repositories\" />
-      <Folder Include="Center\Domain\Services\" />
+      <Folder Include="Center\Domain\Services\Communication\" />
       <Folder Include="Center\Mapping\" />
       <Folder Include="Center\Persistence\" />
       <Folder Include="Center\Resources\" />
