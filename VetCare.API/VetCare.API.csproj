@@ -22,7 +22,6 @@
 
     <ItemGroup>
       <Folder Include="Center\Controllers\" />
-      <Folder Include="Center\Persistence\" />
       <Folder Include="Center\Services\" />
     </ItemGroup>
 
