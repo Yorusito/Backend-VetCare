@@ -21,7 +21,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Center\Controllers\" />
       <Folder Include="Center\Services\" />
     </ItemGroup>
 
