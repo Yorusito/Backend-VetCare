@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using VetCare.API.Profiles.Domain.Models;
 using VetCare.API.Profiles.Resources;
 using VetCare.API.ProfilesDomain.Services;
+using VetCare.API.Shared.Extensions;
 
 namespace VetCare.API.Profiles.Controllers;
 
