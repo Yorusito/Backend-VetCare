@@ -1,7 +1,7 @@
-﻿using VetCare.API.Profile.Domain.Models;
-using VetCare.API.Profile.Domain.Services.Communication;
+﻿using VetCare.API.Profiles.Domain.Models;
+using VetCare.API.Profiles.Domain.Services.Communication;
 
-namespace VetCare.API.Profile.Domain.Services;
+namespace VetCare.API.ProfilesDomain.Services;
 
 public interface IPetOwnerService
 {

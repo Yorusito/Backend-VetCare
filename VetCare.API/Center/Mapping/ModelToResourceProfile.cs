@@ -4,7 +4,7 @@ using VetCare.API.Center.Resources;
 
 namespace VetCare.API.Center.Mapping;
 
-public class ModelToResourceProfile : Profile
+public class ModelToResourceProfile : AutoMapper.Profile
 {
     public ModelToResourceProfile()
     {   

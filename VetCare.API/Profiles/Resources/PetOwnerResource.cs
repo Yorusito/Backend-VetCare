@@ -1,4 +1,4 @@
-﻿namespace VetCare.API.Profile.Resources;
+﻿namespace VetCare.API.Profiles.Resources;
 
 public class PetOwnerResource
 {

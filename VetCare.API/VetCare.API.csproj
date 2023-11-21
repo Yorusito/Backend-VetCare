@@ -23,7 +23,7 @@
 
 
     <ItemGroup>
-      <Folder Include="Profile\Domain\Resources\" />
+      <Folder Include="Profiles\Domain\Resources\" />
     </ItemGroup>
 
 </Project>

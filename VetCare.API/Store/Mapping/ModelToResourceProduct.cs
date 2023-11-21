@@ -4,7 +4,7 @@ using VetCare.API.Store.Resources;
 
 namespace VetCare.API.Store.Mapping;
 
-public class ModelToResourceProduct : Profile
+public class ModelToResourceProduct : AutoMapper.Profile
 {
     public ModelToResourceProduct()
     {
