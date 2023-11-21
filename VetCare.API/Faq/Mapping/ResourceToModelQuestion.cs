@@ -4,7 +4,7 @@ using VetCare.API.Faq.Resources;
 
 namespace VetCare.API.Faq.Mapping;
 
-public class ResourceToModelQuestion :Profile
+public class ResourceToModelQuestion :AutoMapper.Profile
 {
     public ResourceToModelQuestion()
     {

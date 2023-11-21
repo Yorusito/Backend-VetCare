@@ -4,7 +4,7 @@ using VetCare.API.Appointment.Resources;
 
 namespace VetCare.API.Appointment.Mapping;
 
-public class ResourceToModelProfile : Profile
+public class ResourceToModelProfile : AutoMapper.Profile
 {
     public ResourceToModelProfile()
     {
