@@ -22,4 +22,8 @@
 
 
 
+    <ItemGroup>
+      <Folder Include="Profile\Domain\Resources\" />
+    </ItemGroup>
+
 </Project>
