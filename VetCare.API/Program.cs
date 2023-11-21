@@ -14,7 +14,10 @@ using VetCare.API.Shared.Persistence.Contexts;
 using VetCare.API.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-
+using VetCare.API.Center.Domain.Repositories;
+using VetCare.API.Center.Domain.Services;
+using VetCare.API.Center.Persistence.Repositories;
+using VetCare.API.Center.Services;
 using VetCare.API.Faq.Domain.Repositories;
 using VetCare.API.Faq.Domain.Services;
 using VetCare.API.Faq.Persistence.Repositories;
@@ -102,18 +105,21 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 //UnitOfWorks
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+builder.Services.AddScoped<IUnitOfWorkV, UnitOfWorkV>();
 builder.Services.AddScoped<IUnitOfWorkS, UnitOfWorkS>();
 builder.Services.AddScoped<IUnitOfWorkF, UnitOfWorkF>();
 
 //Repositories
-
+builder.Services.AddScoped<IVetRepository, VetRepository>();
+builder.Services.AddScoped<IVeterinaryRepository, VeterinaryRepository>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
 //Services
+builder.Services.AddScoped<IVetService, VetService>();
+builder.Services.AddScoped<IVeterinaryService, VeterinaryService>();
 builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
