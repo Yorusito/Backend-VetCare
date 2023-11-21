@@ -4,6 +4,7 @@ using VetCare.API.Appointment.Domain.Models;
 using VetCare.API.Center.Domain.Models;
 using VetCare.API.Faq.Domain.Models;
 using VetCare.API.Identification.Domain.Models;
+using VetCare.API.Profiles.Domain.Models;
 using VetCare.API.Store.Domain.Models;
 
 namespace VetCare.API.Shared.Persistence.Contexts;
@@ -11,7 +12,7 @@ namespace VetCare.API.Shared.Persistence.Contexts;
 public class AppDbContext : DbContext
 {
     
-    
+    public DbSet<PetOwner> PetOwners { get; set; }
     public DbSet<Vet> Vets { get; set; }
     
     public DbSet<Veterinary> Veterinary { get; set; }
@@ -34,6 +35,15 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(builder);
         
+        builder.Entity<PetOwner>().ToTable("PetOwner");
+        builder.Entity<PetOwner>().HasKey(p => p.Id);
+        builder.Entity<PetOwner>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<PetOwner>().Property(p => p.Firstname).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Lastname).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Email).IsRequired();
+        builder.Entity<PetOwner>().Property(p => p.Gender).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Birthdate).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.ImageUrl).IsRequired();
         
         
         builder.Entity<Vet>().ToTable("Vet");
