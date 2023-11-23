@@ -1,5 +1,5 @@
-using VetCare.API.Appointment.Domain.Models;
 using VetCare.API.Shared.Domain.Services.Communication;
+using VetCare.API.Appointment.Domain.Models;
 
 namespace VetCare.API.Appointment.Domain.Services.Communication;
 

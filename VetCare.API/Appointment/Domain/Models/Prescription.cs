@@ -9,6 +9,6 @@ public class Prescription
     
     
     // Relationships
-    public int CategoryId { get; set; }
+    public int PetId { get; set; }
     public Pet Pet { get; set; }
 }

@@ -1,7 +1,10 @@
 using VetCare.API.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using VetCare.API.Appointment.Domain.Models;
+using VetCare.API.Center.Domain.Models;
+using VetCare.API.Faq.Domain.Models;
 using VetCare.API.Identification.Domain.Models;
+using VetCare.API.Profiles.Domain.Models;
 using VetCare.API.Store.Domain.Models;
 
 namespace VetCare.API.Shared.Persistence.Contexts;
@@ -9,10 +12,17 @@ namespace VetCare.API.Shared.Persistence.Contexts;
 public class AppDbContext : DbContext
 {
     
+    public DbSet<PetOwner> PetOwners { get; set; }
+    public DbSet<Vet> Vets { get; set; }
+    
+    public DbSet<Veterinary> Veterinary { get; set; }
+    
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Prescription> Prescriptions { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<Question> Questions { get; set; }
     
     
 
@@ -24,6 +34,46 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        
+        builder.Entity<PetOwner>().ToTable("PetOwner");
+        builder.Entity<PetOwner>().HasKey(p => p.Id);
+        builder.Entity<PetOwner>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<PetOwner>().Property(p => p.Firstname).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Lastname).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Email).IsRequired();
+        builder.Entity<PetOwner>().Property(p => p.Gender).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.Birthdate).IsRequired().HasMaxLength(30);
+        builder.Entity<PetOwner>().Property(p => p.ImageUrl).IsRequired();
+        
+        
+        builder.Entity<Vet>().ToTable("Vet");
+        builder.Entity<Vet>().HasKey(p => p.Id);
+        builder.Entity<Vet>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Vet>().Property(p => p.Firstname).IsRequired().HasMaxLength(30);
+        builder.Entity<Vet>().Property(p => p.Lastname).IsRequired().HasMaxLength(30);
+        builder.Entity<Vet>().Property(p => p.Email).IsRequired();
+        builder.Entity<Vet>().Property(p => p.Gender).IsRequired().HasMaxLength(30);
+        builder.Entity<Vet>().Property(p => p.Birthdate).IsRequired().HasMaxLength(30);
+        builder.Entity<Vet>().Property(p => p.ImageUrl).IsRequired();
+        
+        
+        // Relationships
+        builder.Entity<Vet>()
+            .HasMany(p => p.Veterinary)
+            .WithOne(p => p.Vet)
+            .HasForeignKey(p => p.VetId);
+        
+        builder.Entity<Veterinary>().ToTable("Veterinary");
+        builder.Entity<Veterinary>().HasKey(p => p.Id);
+        builder.Entity<Veterinary>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Veterinary>().Property(p => p.Title).IsRequired().HasMaxLength(50);
+        builder.Entity<Veterinary>().Property(p => p.Description).HasMaxLength(120);
+        builder.Entity<Veterinary>().Property(p => p.Ranking).IsRequired();
+        builder.Entity<Veterinary>().Property(p => p.Address).IsRequired();
+        builder.Entity<Veterinary>().Property(p => p.phoneNumber).IsRequired();
+        builder.Entity<Veterinary>().Property(p => p.imageUrl).IsRequired();
+        
+        
 
         builder.Entity<Pet>().ToTable("Pets");
         builder.Entity<Pet>().HasKey(p => p.Id);
@@ -40,7 +90,7 @@ public class AppDbContext : DbContext
         builder.Entity<Pet>()
             .HasMany(p => p.Prescriptions)
             .WithOne(p => p.Pet)
-            .HasForeignKey(p => p.CategoryId);
+            .HasForeignKey(p => p.PetId);
         
         builder.Entity<Prescription>().ToTable("Prescriptions");
         builder.Entity<Prescription>().HasKey(p => p.Id);
@@ -69,6 +119,14 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(p => p.LastName).IsRequired();
         builder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
 
+        
+        builder.Entity<Question>().ToTable("Questions");
+        builder.Entity<Question>().HasKey(p => p.Id);
+        builder.Entity<Question>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Question>().Property(p => p.Name).IsRequired();
+        builder.Entity<Question>().Property(p => p.Description).IsRequired();
+        
+        
         
         // Apply Snake Case Naming Convention
         

@@ -3,15 +3,27 @@ using VetCare.API.Appointment.Domain.Services;
 using VetCare.API.Appointment.Mapping;
 using VetCare.API.Appointment.Persistence.Repositories;
 using VetCare.API.Appointment.Services;
+
 using VetCare.API.Store.Domain.Repositories;
 using VetCare.API.Store.Domain.Services;
 using VetCare.API.Store.Mapping;
 using VetCare.API.Store.Persistence.Repositories;
 using VetCare.API.Store.Services;
+
 using VetCare.API.Shared.Persistence.Contexts;
 using VetCare.API.Shared.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using VetCare.API.Center.Domain.Repositories;
+using VetCare.API.Center.Domain.Services;
+using VetCare.API.Center.Persistence.Repositories;
+using VetCare.API.Center.Services;
+using VetCare.API.Faq.Domain.Repositories;
+using VetCare.API.Faq.Domain.Services;
+using VetCare.API.Faq.Persistence.Repositories;
+using VetCare.API.Faq.Services;
+using VetCare.API.Faq.Mapping;
+
 using VetCare.API.Identification.Authorization.Handlers.Implementations;
 using VetCare.API.Identification.Authorization.Handlers.Interfaces;
 using VetCare.API.Identification.Authorization.Middleware;
@@ -91,14 +103,31 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 
 // Dependency Injection Configuration
 
+//UnitOfWorks
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWorkV, UnitOfWorkV>();
 builder.Services.AddScoped<IUnitOfWorkS, UnitOfWorkS>();
+builder.Services.AddScoped<IUnitOfWorkF, UnitOfWorkF>();
+
+//Repositories
+builder.Services.AddScoped<IVetRepository, VetRepository>();
+builder.Services.AddScoped<IVeterinaryRepository, VeterinaryRepository>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
-builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+
+//Services
+builder.Services.AddScoped<IVetService, VetService>();
+builder.Services.AddScoped<IVeterinaryService, VeterinaryService>();
+builder.Services.AddScoped<IPetService, PetService>();
 builder.Services.AddScoped<IPrescriptionService, PrescriptionService>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
+
+
+
+
 
 // Security Injection Configuration
 builder.Services.AddScoped<IJwtHandler, JwtHandler>();

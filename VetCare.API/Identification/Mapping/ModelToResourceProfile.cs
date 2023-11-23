@@ -5,7 +5,7 @@ using VetCare.API.Identification.Resources;
 
 namespace VetCare.API.Identification.Mapping;
 
-public class ModelToResourceProfile : Profile
+public class ModelToResourceProfile : AutoMapper.Profile
 {
     public ModelToResourceProfile()
     {
