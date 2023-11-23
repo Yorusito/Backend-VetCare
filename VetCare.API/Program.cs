@@ -169,10 +169,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configure CORS 
-app.UseCors(x => x
-    .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure Error Handler Middleware
 app.UseMiddleware<ErrorHandlerMiddleware>();
@@ -180,7 +177,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 // Configure JWT Handling
 app.UseMiddleware<JwtMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
